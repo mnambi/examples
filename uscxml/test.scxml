@@ -5,12 +5,12 @@
 	-->
 	<datamodel>
 		<data id="foo" expr="1" type="bit" />
-	</datamodel>
-	<parallel id="main">
-		<state id="toggleFoo">
-			<transition event="toggle.foo">
-				<script>foo = !foo;</script>
-			</transition>
-		</state>
-	</parallel>
+	</datamodel>	
+	<state id="stateA">
+	    <transition event="gotoB" cond="printHello" target="stateB"/>
+        </state>
+
+	<state id="stateB">
+        </state>
+	
 </scxml>

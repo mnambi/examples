@@ -1,9 +1,36 @@
 #include <iostream>
+#include <thread>
 #include "uscxml/uscxml.h"
 #include "uscxml/Interpreter.h"
 #include "uscxml/plugins/DataModelImpl.h"
 #include "uscxml/plugins/DataModel.h"
 
+
+bool printHello()
+{
+    std::cout << "Hello world." << std::endl;
+    return true;
+}
+
+void printMenu()
+{
+    std::cout << "--- Input Menu --- \n"
+              << "Type event name" << std::endl
+              << "Type 'q' to exit" << std::endl;
+
+}
+
+void run( uscxml::Interpreter& sc)
+{
+    uscxml::InterpreterState state;
+    while ((state = sc.step()) != uscxml::USCXML_FINISHED)
+    {
+        // uscxml::DataModel dm = sc.getActionLanguage()->dataModel;
+
+        // std::cout << dm.evalAsData("foo") << std::endl;
+
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -17,19 +44,24 @@ int main(int argc, char *argv[])
     uscxml::StateTransitionMonitor stm;
     sc.addMonitor(&stm);
 
+    std::thread t(run, std::ref(sc));
 //    uscxml::ActionLanguage al;
   //  sc.setActionLanguage(al);
 
-
-
-
-    while ((state = sc.step()) != uscxml::USCXML_FINISHED)
+    std::string inputString;
+    do
     {
-        uscxml::DataModel dm = sc.getActionLanguage()->dataModel;
+        printMenu();
+        std::getline(std::cin, inputString);
+        std::cout << "Event called: " << inputString << std::endl;
+        uscxml::Event e(inputString);
+        sc.receive(e);
 
-        std::cout << dm.evalAsData("foreachArray1") << std::endl;
+    } while(inputString != "q");
 
-	}
+
+
+
 
 	return 0;
 }
