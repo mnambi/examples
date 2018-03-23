@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.8)
-project(some_application)
+project(app)
 
 set(${PROJECT_NAME}_VERSION_MAJOR 0)
 set(${PROJECT_NAME}_VERSION_MINOR 1)
@@ -16,15 +16,18 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_BUILD_TYPE Release)
 
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../wee/ ${CMAKE_MODULE_PATH})
+message(${CMAKE_MODULE_PATH})
+find_package(WEE REQUIRED)
 # add_library cannot have only header files. It needs source files also. Otherwise CMake throws an
 # error saying that it cannot determine linker language.
 set(SOURCES
-    some_application.cpp
+    app.cpp
     )
 
 set(HEADERS
     )   
 
-add_executable(someApp ${SOURCES} ${HEADERS})
+add_executable(app ${SOURCES} ${HEADERS})
 
 
