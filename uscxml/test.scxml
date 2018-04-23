@@ -1,16 +1,15 @@
 <scxml datamodel="promela">
   <!--
-		#promela-event-source:
-			toggle.foo
-	-->
-	<datamodel>
-		<data id="foo" expr="1" type="bit" />
-	</datamodel>	
-	<state id="stateA">
-	    <transition event="gotoB" cond="printHello" target="stateB"/>
+        #promela-event-source:
+            toggle.foo
+    -->
+    <datamodel>
+        <data id="foo" expr="1" type="bit" />
+    </datamodel>
+    <state id="stateA">
+        <script>printHello()</script>
+        <transition event="gotoB" cond="printHello" target="stateB"/>
         </state>
-
-	<state id="stateB">
+    <state id="stateB">
         </state>
-	
 </scxml>

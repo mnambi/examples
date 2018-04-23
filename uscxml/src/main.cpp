@@ -32,6 +32,11 @@ void run( uscxml::Interpreter& sc)
     }
 }
 
+void fn(const std::string& ssid, const std::string& state, const xercesc_3_1::DOMElement* st)
+{
+    std::cout << "In state: " << state << std::endl;
+}
+
 int main(int argc, char *argv[])
 {
 	if (argc < 2) {
@@ -42,11 +47,12 @@ int main(int argc, char *argv[])
 	uscxml::Interpreter sc = uscxml::Interpreter::fromURL(argv[1]);
 	uscxml::InterpreterState state;
     uscxml::StateTransitionMonitor stm;
-    sc.addMonitor(&stm);
+    //sc.addMonitor(&stm);
+    sc.on().enterState(fn);
 
     std::thread t(run, std::ref(sc));
-//    uscxml::ActionLanguage al;
-  //  sc.setActionLanguage(al);
+    // uscxml::ActionLanguage al;
+    // sc.setActionLanguage(al);
 
     std::string inputString;
     do
